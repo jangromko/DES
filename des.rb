@@ -1,15 +1,49 @@
 load 'stale_algorytmu.rb'
+load 'funkcje.rb'
 
-def permutacja(we, permutacja)
-  wy = []
+blok = '0123456789ABCDEF'.to_i(16).to_s(2).split(//).map(&:to_i)
+klucz = '133457799BBCDFF1'.to_i(16).to_s(2).split(//).map(&:to_i)
+blok = wyrownaj_do(blok, 64)
+klucz = wyrownaj_do(klucz, 64)
+puts klucz.to_s
+puts blok.to_s
 
-  for i in 0..permutacja.size-1
-    wy[i] = we[permutacja[i]-1]
-  end
+puts xor_tablicowy(blok, klucz).to_s
 
-  wy
+puts wiersz_kolumna([1,1,0,0,1,0]).to_s
+
+klucz = permutacja(klucz, PC1)
+puts klucz.to_s
+
+puts s_boks([0,0,1,1,1,0], 2).to_s
+
+puts klucz[0..27].to_s
+puts klucz[28..55].to_s
+
+blok = permutacja(blok, IP)
+
+for i in 0..15
+  klucz[0..27] = przesun_w_lewo(klucz[0..27], LS[i])
+  klucz[28..55] = przesun_w_lewo(klucz[28..55], LS[i])
+
+  k_x = permutacja(klucz, PC2)
+  puts ''
+  puts f(blok[32..63], k_x).to_s
+  blok = blok[32..63] + xor_tablicowy(blok[0..31], f(blok[32..63], k_x))
+
+  #puts ''
+  puts 'L' + (i+1).to_s + ': ' + blok[0..31].to_s
+  puts 'R' + (i+1).to_s + ': ' + blok[32..63].to_s
+
 end
 
+blok = blok[32..63] + blok[0..31]
+
+blok = permutacja(blok, FP)
+puts tablica_bitow_na_liczbe(blok).to_s(16)
+
+
+=begin
 print 'Podaj nazwę pliku wejściowego: '
 nazwa_wej = gets.chomp
 
@@ -43,3 +77,4 @@ if File.file?(nazwa_wej)
 else
   puts 'Podano błędną nazwę pliku. Kończenie pracy programu...'
 end
+=end
