@@ -44,8 +44,14 @@ end
 
 # funkcja XOR dla tablic bitów
 def xor_tablicowy(a, b)
-  wynik = liczba_na_tablice_bitow(a.join.to_i(2) ^ b.join.to_i(2))
-  wyrownaj_do(wynik, [a.size, b.size].max)
+  #wynik = liczba_na_tablice_bitow(a.join.to_i(2) ^ b.join.to_i(2))
+  #wyrownaj_do(wynik, [a.size, b.size].max)
+
+  for i in 0..a.size-1
+    a[i] ^= b[i]
+  end
+
+  a
 end
 
 # funkcja obliczająca numer wiersza i kolumny do S-boksa
