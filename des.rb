@@ -5,14 +5,16 @@ blok = '0123456789ABCDEF'.to_i(16).to_s(2).split(//).map(&:to_i)
 klucz = '133457799BBCDFF1'.to_i(16).to_s(2).split(//).map(&:to_i)
 blok = wyrownaj_do(blok, 64)
 klucz = wyrownaj_do(klucz, 64)
-puts klucz.to_s
-puts blok.to_s
-
-puts xor_tablicowy(blok, klucz).to_s
-
-puts wiersz_kolumna([1,1,0,0,1,0]).to_s
 
 klucz = permutacja(klucz, PC1)
+
+wynik = szyfruj_blok(blok, klucz)
+
+for i in 0..wynik.size-1
+  puts wynik[i].to_s(16)
+end
+
+=begin
 puts klucz.to_s
 
 puts s_boks([0,0,1,1,1,0], 2).to_s
@@ -42,7 +44,7 @@ blok = blok[32..63] + blok[0..31]
 blok = permutacja(blok, FP)
 puts tablica_bitow_na_liczbe(blok).to_s(16)
 
-
+=end
 =begin
 print 'Podaj nazwę pliku wejściowego: '
 nazwa_wej = gets.chomp
