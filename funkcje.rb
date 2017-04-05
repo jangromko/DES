@@ -77,15 +77,30 @@ def pakuj_w_blok(tablica_bitow)
   blok
 end
 
+def generuj_klucze(klucz)
+  klucz = permutacja(klucz, PC1)
+  klucze = Array.new(17) {Array.new(2)}
+  klucze[0][0..27] = klucz[0..27]
+  klucze[0][28..55] = klucz[28..55]
+
+  for i in 1..16
+    klucze[i][0..27] = przesun_w_lewo(klucze[i-1][0..27].clone, LS[i-1])
+    klucze[i][28..55] = przesun_w_lewo(klucze[i-1][28..55].clone, LS[i-1])
+  end
+
+  for i in 0..16
+    klucze[i] = permutacja(klucze[i], PC2)
+  end
+
+  klucze
+end
+
 # szyfrowanie pojedynczego bloku
-def szyfruj_blok(blok, klucz_po_pc1)
+def szyfruj_blok(blok, klucze)
   blok = permutacja(blok, IP)
 
   for i in 0..15
-    klucz_po_pc1[0..27] = przesun_w_lewo(klucz_po_pc1[0..27], LS[i])
-    klucz_po_pc1[28..55] = przesun_w_lewo(klucz_po_pc1[28..55], LS[i])
-    k_x = permutacja(klucz_po_pc1, PC2)
-    blok = blok[32..63] + xor_tablicowy(blok[0..31], f(blok[32..63], k_x))
+    blok = blok[32..63] + xor_tablicowy(blok[0..31], f(blok[32..63], klucze[i+1]))
   end
 
   blok = blok[32..63] + blok[0..31]
@@ -93,3 +108,15 @@ def szyfruj_blok(blok, klucz_po_pc1)
   pakuj_w_blok(permutacja(blok, FP))
 end
 
+# deszyfrowanie pojedynczego bloku
+def deszyfruj_blok(blok, klucze)
+  blok = permutacja(blok, IP)
+
+  for i in 0..15
+    blok = blok[32..63] + xor_tablicowy(blok[0..31], f(blok[32..63], klucze[16-i]))
+  end
+
+  blok = blok[32..63] + blok[0..31]
+
+  pakuj_w_blok(permutacja(blok, FP))
+end

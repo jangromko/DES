@@ -6,12 +6,18 @@ klucz = '133457799BBCDFF1'.to_i(16).to_s(2).split(//).map(&:to_i)
 blok = wyrownaj_do(blok, 64)
 klucz = wyrownaj_do(klucz, 64)
 
-klucz = permutacja(klucz, PC1)
-
-wynik = szyfruj_blok(blok, klucz)
+klucze = generuj_klucze(klucz)
+wynik = szyfruj_blok(blok, klucze)
 
 for i in 0..wynik.size-1
   puts wynik[i].to_s(16)
+end
+puts ""
+blok_zaszyfrowany = '85E813540F0AB405'.to_i(16).to_s(2).split(//).map(&:to_i)
+wynik2 = deszyfruj_blok(blok_zaszyfrowany, klucze)
+
+for i in 0..wynik2.size-1
+  puts wynik2[i].to_s(16)
 end
 
 =begin
