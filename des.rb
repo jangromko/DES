@@ -1,6 +1,8 @@
 load 'stale_algorytmu.rb'
 load 'funkcje.rb'
 
+=begin
+
 blok = '0123456789ABCDEF'.to_i(16).to_s(2).split(//).map(&:to_i)
 klucz = '133457799BBCDFF1'.to_i(16).to_s(2).split(//).map(&:to_i)
 blok = wyrownaj_do(blok, 64)
@@ -20,37 +22,24 @@ for i in 0..wynik2.size-1
   puts wynik2[i].to_s(16)
 end
 
-=begin
-puts klucz.to_s
+=end
 
-puts s_boks([0,0,1,1,1,0], 2).to_s
+wejscie = [1, 35, 69, 103, 137, 171, 205, 239, 1, 35, 69, 103, 137, 171, 205, 239, 16, 35, 69, 103, 137, 171, 205, 239, 1, 35, 69, 103]
 
-puts klucz[0..27].to_s
-puts klucz[28..55].to_s
+klucz = '133457799BBCDFF1'.to_i(16).to_s(2).split(//).map(&:to_i)
+wynik = szyfruj(wejscie, klucz)
 
-blok = permutacja(blok, IP)
-
-for i in 0..15
-  klucz[0..27] = przesun_w_lewo(klucz[0..27], LS[i])
-  klucz[28..55] = przesun_w_lewo(klucz[28..55], LS[i])
-
-  k_x = permutacja(klucz, PC2)
-  puts ''
-  puts f(blok[32..63], k_x).to_s
-  blok = blok[32..63] + xor_tablicowy(blok[0..31], f(blok[32..63], k_x))
-
-  #puts ''
-  puts 'L' + (i+1).to_s + ': ' + blok[0..31].to_s
-  puts 'R' + (i+1).to_s + ': ' + blok[32..63].to_s
-
+for i in 0..wynik.size-1
+  print wynik[i].to_s(16)
 end
 
-blok = blok[32..63] + blok[0..31]
 
-blok = permutacja(blok, FP)
-puts tablica_bitow_na_liczbe(blok).to_s(16)
+puts ''
+deszyfr = deszyfruj(wynik, klucz)
+for i in 0..deszyfr.size-1
+  print deszyfr[i].to_s(16)
+end
 
-=end
 =begin
 print 'Podaj nazwę pliku wejściowego: '
 nazwa_wej = gets.chomp
