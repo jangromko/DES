@@ -36,7 +36,7 @@ if File.file?(nazwa_wej)
     plik_odszyfrowany = deszyfruj(plik_przetworzony, klucz)
 
     File.binwrite(nazwa_wyj, plik_odszyfrowany.pack('c*'))
-    puts "Utworzono plik #{nazwa_wyj} z zaszyfrowaną zawartością."
+    puts "Utworzono plik #{nazwa_wyj} z odszyfrowaną zawartością."
 
   else
     puts 'Wybrano błędną opcję. Kończenie pracy programu...'

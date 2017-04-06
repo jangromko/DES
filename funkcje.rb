@@ -188,10 +188,10 @@ def deszyfruj(wejscie, klucz)
     wynik_deszyfrowania += deszyfruj_blok(blok_na_tablice_bitow(wejscie[(i*8)..(i*8+7)]), klucze)
   end
 
-  nadmiar = wynik_deszyfrowania[wynik_deszyfrowania.size-8]
+  nadmiar = 8 - wynik_deszyfrowania[wynik_deszyfrowania.size-8]
 
   for i in 0..nadmiar+7
-    wynik_deszyfrowania.pop
+     wynik_deszyfrowania.pop
   end
 
   wynik_deszyfrowania
